@@ -17,10 +17,18 @@ class MyApp extends StatelessWidget {
       return  MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => ResponsiveLayout(
-          mobileScaffold: const HomeMobileScaffold(),
-          desktopScaffold: const HomeDesktopScaffold(),
-        ),
+        '/':(context) => 
+        LayoutBuilder(builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          return const HomeMobileScaffold();
+        } else {
+          return const HomeDesktopScaffold();
+        }
+      }),
+        // '/': (context) => ResponsiveLayout(
+        //   mobileScaffold: const HomeMobileScaffold(),
+        //   desktopScaffold: const HomeDesktopScaffold(),
+        // ),
         '/detail': (context) => const DetailPage(),
       },
     );
