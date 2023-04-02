@@ -31,7 +31,7 @@ const secTitleTextStyle = TextStyle(
 
 const secSubtitleTextStyle = TextStyle(
   color: Colors.white,
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.bold,
   letterSpacing: 0.5,
   fontSize: 14,
 );
