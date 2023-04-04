@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stylish/viewmodel.dart';
 
-class DesktopScaffold extends StatefulWidget {
-  const DesktopScaffold({super.key});
+class HomeDesktopScaffold extends StatefulWidget {
+  const HomeDesktopScaffold({super.key});
 
   @override
-  State<DesktopScaffold> createState() => _DesktopScaffoldState();
+  State<HomeDesktopScaffold> createState() => _HomeDesktopScaffoldState();
 }
 
-class _DesktopScaffoldState extends State<DesktopScaffold> {
+class _HomeDesktopScaffoldState extends State<HomeDesktopScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,9 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: ViewModel(context: context).createRowContainer(),
+                children: ViewModel(context: context, onTapListItem: (p0) {
+                  Navigator.pushNamed(context, '/detail', arguments: p0);
+                },).createRowContainer(),
               )
           ),
           Expanded(
@@ -56,7 +58,9 @@ class CategorySection extends StatelessWidget {
         children: [
           Text(sectionHeader),
           Column(
-            children: ViewModel(context: context).createColumnContainer(),
+            children: ViewModel(context: context, onTapListItem: (p0) {
+              Navigator.pushNamed(context, '/detail', arguments: p0);
+            },).createColumnContainer(),
           )
         ],
       ),

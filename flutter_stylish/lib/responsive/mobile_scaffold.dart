@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stylish/viewmodel.dart';
 
-class MobileScaffold extends StatefulWidget {
-  const MobileScaffold({super.key});
+class HomeMobileScaffold extends StatefulWidget {
+  const HomeMobileScaffold({super.key});
 
   @override
-  State<MobileScaffold> createState() => _MobileScaffoldState();
+  State<HomeMobileScaffold> createState() => _HomeMobileScaffoldState();
 }
 
-class _MobileScaffoldState extends State<MobileScaffold> {
+class _HomeMobileScaffoldState extends State<HomeMobileScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,9 @@ class _MobileScaffoldState extends State<MobileScaffold> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: ViewModel(context: context).createRowContainer(),
+                children: ViewModel(context: context, onTapListItem: (p0) {
+                  Navigator.pushNamed(context, '/detail', arguments: p0);
+                },).createRowContainer(),
               )
             ),
             const CategorySection(sectionHeader: "女裝"),
@@ -55,7 +57,9 @@ class CategorySection extends StatelessWidget {
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: ViewModel(context: context).createColumnContainer(),
+          children: ViewModel(context: context, onTapListItem: (p0) {
+            Navigator.pushNamed(context, '/detail', arguments: p0);
+          },).createColumnContainer(),
         )
       ],
     );
