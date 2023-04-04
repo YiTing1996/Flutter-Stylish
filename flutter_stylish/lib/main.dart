@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stylish/detail.dart';
-import 'package:flutter_stylish/responsive/desktop_scaffold.dart';
-import 'package:flutter_stylish/responsive/mobile_scaffold.dart';
-import 'package:flutter_stylish/responsive/responsive_layout.dart';
+import 'package:flutter_stylish/page/detail.dart';
+import 'package:flutter_stylish/page/responsive/home_desktop.dart';
+import 'package:flutter_stylish/page/responsive/home_mobile.dart';
+import 'package:flutter_stylish/page/responsive/responsive_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => ResponsiveLayout(
-          mobileScaffold: HomeMobileScaffold(),
-          desktopScaffold: HomeDesktopScaffold(),
+          mobileScaffold: const HomeMobileScaffold(),
+          desktopScaffold: const HomeDesktopScaffold(),
         ),
-        '/detail': (context) => DetailPage(),
+        '/detail': (context) => const DetailPage(),
       },
     );
   }

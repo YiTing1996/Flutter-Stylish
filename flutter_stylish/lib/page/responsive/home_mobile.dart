@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stylish/viewmodel.dart';
+import 'package:flutter_stylish/model/viewmodel.dart';
 
 class HomeMobileScaffold extends StatefulWidget {
   const HomeMobileScaffold({super.key});
