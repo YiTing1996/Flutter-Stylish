@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_stylish/helper/common_export.dart';
 import 'package:flutter_stylish/model/viewmodel.dart';
 
 class HomeDesktopScaffold extends StatefulWidget {
@@ -22,14 +23,15 @@ class _HomeDesktopScaffoldState extends State<HomeDesktopScaffold> {
       ),
       body: Column(
         children: [
-          SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: ViewModel(context: context, onTapListItem: (p0) {
-                  Navigator.pushNamed(context, '/detail', arguments: p0);
-                },).createRowContainer(),
-              )
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+                height: 100,
+                child: ViewModel(
+                  onTapListItem: (p0) {
+                    Navigator.pushNamed(context, '/detail', arguments: p0);
+                  },
+                ).createRowContainer()),
           ),
           Expanded(
             child: Row(
@@ -53,17 +55,22 @@ class CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Text(sectionHeader),
-          Column(
-            children: ViewModel(context: context, onTapListItem: (p0) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Column(
+      children: [
+        Text(sectionHeader),
+        SizedBox(
+          width: screenWidth * 0.33,
+          height: screenHeight - 200,
+          child: ViewModel(
+            onTapListItem: (p0) {
               Navigator.pushNamed(context, '/detail', arguments: p0);
-            },).createColumnContainer(),
-          )
-        ],
-      ),
+            },
+          ).createColumnContainer(),
+        ),
+      ],
     );
   }
 }
