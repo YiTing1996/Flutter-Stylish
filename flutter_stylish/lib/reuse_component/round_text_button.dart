@@ -12,7 +12,7 @@ class RoundTextButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RoundTextButtonState createState() => _RoundTextButtonState();
+  State<RoundTextButton> createState() => _RoundTextButtonState();
 }
 
 class _RoundTextButtonState extends State<RoundTextButton> {

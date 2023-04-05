@@ -19,7 +19,7 @@ class NumChangeWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NumChangeWidgetState createState() => _NumChangeWidgetState();
+  State<NumChangeWidget> createState() => _NumChangeWidgetState();
 }
 
 class _NumChangeWidgetState extends State<NumChangeWidget> {

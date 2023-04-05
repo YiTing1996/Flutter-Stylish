@@ -11,7 +11,7 @@ class SqaureColorButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SqaureColorButtonState createState() => _SqaureColorButtonState();
+  State<SqaureColorButton> createState() => _SqaureColorButtonState();  
 }
 
 class _SqaureColorButtonState extends State<SqaureColorButton> {
