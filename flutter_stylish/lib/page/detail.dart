@@ -157,28 +157,19 @@ class FeatureMenu extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              // 文字還需要再包一層Align才會對齊
-              alignment: Alignment.centerLeft,
-              child: Text(
+            Text(
                 title,
                 style: titleTextStyle,
-              ),
             ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
+            const Text(
                 '2023032101',
                 style: subtitleTextStyle,
-              ),
             ),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
+            const Text(
                 'NT \$323',
                 style: titleTextStyle,
-              ),
             ),
             getColorButton([Colors.blue, Colors.green]),
             getSizeButton(['S', 'M']),
@@ -208,10 +199,7 @@ class FeatureMenu extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text('實品顏色依單品照為主\n棉100%\n厚薄:薄\n彈性:無\n素材產地/日本\n加工產地/中國'),
-            )
+            const Text('實品顏色依單品照為主\n棉100%\n厚薄:薄\n彈性:無\n素材產地/日本\n加工產地/中國')
           ],
         ),
       ),
