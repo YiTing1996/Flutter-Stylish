@@ -233,7 +233,7 @@ class FeatureMenu extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: SqaureColorButton(
-                color: color.toColor(), // transform hex to color
+                color: color.toColor(),
                 onPressed: () {
                   debugPrint('點擊藍色按鈕');
                 }),

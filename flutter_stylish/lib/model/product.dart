@@ -128,7 +128,8 @@ class Detail {
         "images": List<dynamic>.from(images.map((x) => x)),
       };
   
-  List<String> colorCodeList() { // for detail desc menu
+  /// Get color code list (for detail desc menu)
+  List<String> colorCodeList() {
     List<String> codeList = [];
     for (var color in colors) {
       codeList.add(color.code);

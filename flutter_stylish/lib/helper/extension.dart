@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 extension ColorExtension on String {
+  /// transform from hex string to color
   toColor() {
     var hexStringColor = this;
     final buffer = StringBuffer();

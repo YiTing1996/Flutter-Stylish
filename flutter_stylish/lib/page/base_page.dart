@@ -1,3 +1,4 @@
+/// Implement default AppBar and BlocProvider
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stylish/helper/common_export.dart';
@@ -8,6 +9,7 @@ abstract class BasePageScreen extends StatefulWidget {
 
 abstract class BasePageScreenState<Page extends BasePageScreen>
     extends State<Page> {
+  /// Optional (for detail page api)
   int getId() { return 0; } 
 
   bool _isHome = true;
