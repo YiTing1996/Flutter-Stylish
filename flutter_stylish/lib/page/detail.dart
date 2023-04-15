@@ -134,7 +134,7 @@ class DescMenu extends StatelessWidget {
 }
 
 class FeatureMenu extends StatelessWidget {
-  final Detail? detail;
+  final Product? detail;
   final VoidCallback onPressed;
 
   const FeatureMenu({

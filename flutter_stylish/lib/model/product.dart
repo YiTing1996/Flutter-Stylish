@@ -1,26 +1,71 @@
 // Helper: https://app.quicktype.io/
+// https://github.com/AppWorks-School/API-Doc/tree/master/Stylish#product-list-api
 import 'dart:convert';
 
-Products parseListFromJson(String str) => Products.fromJson(json.decode(str));
-Product parseSingleFromJson(String str) => Product.fromJson(json.decode(str));
-String convertToJson(Products data) => json.encode(data.toJson());
+MarketingRsp parseHotsFromJson(String str) => MarketingRsp.fromJson(json.decode(str));
+ProductsRsp parseListFromJson(String str) => ProductsRsp.fromJson(json.decode(str));
+DetailRsp parseSingleFromJson(String str) => DetailRsp.fromJson(json.decode(str));
+String convertToJson(ProductsRsp data) => json.encode(data.toJson());
 
-class Products {
-  @override // 複寫以印出Object內容
+/// For home page row
+class MarketingRsp {
+    @override // 複寫以印出Object內容
+    String toString() {
+    return 'MarketingRsp: {data: $data}';
+    }
+
+    MarketingRsp({
+        required this.data,
+    });
+
+    final List<Hots> data;
+
+    factory MarketingRsp.fromJson(Map<String, dynamic> json) => MarketingRsp(
+        data: List<Hots>.from(json["data"].map((x) => Hots.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    };
+}
+
+class Hots {
+    Hots({
+        required this.title,
+        required this.products,
+    });
+
+    final String title;
+    final List<Product> products;
+
+    factory Hots.fromJson(Map<String, dynamic> json) => Hots(
+        title: json["title"],
+        products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "title": title,
+        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+    };
+}
+
+/// For home page category column
+class ProductsRsp {
+  @override
   String toString() {
-    return 'Products: {data: $data, nextPaging: $nextPaging}';
+    return 'ProductsRsp: {data: $data, nextPaging: $nextPaging}';
   }
 
-  Products({
+  ProductsRsp({
     required this.data,
     required this.nextPaging,
   });
 
-  List<Detail> data;
+  List<Product> data;
   int nextPaging;
 
-  factory Products.fromJson(Map<String, dynamic> json) => Products(
-        data: List<Detail>.from(json["data"].map((x) => Detail.fromJson(x))),
+  factory ProductsRsp.fromJson(Map<String, dynamic> json) => ProductsRsp(
+        data: List<Product>.from(json["data"].map((x) => Product.fromJson(x))),
         nextPaging: json["next_paging"] ?? 0,
       );
 
@@ -30,20 +75,21 @@ class Products {
       };
 }
 
-class Product {
-  @override // 複寫以印出Object內容
+/// For detail page
+class DetailRsp {
+  @override
   String toString() {
-    return 'Product: {data: $data}';
+    return 'DetailRsp: {data: $data}';
   }
 
-  Product({
+  DetailRsp({
     required this.data,
   });
 
-  final Detail data;
+  final Product data;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        data: Detail.fromJson(json["data"]),
+  factory DetailRsp.fromJson(Map<String, dynamic> json) => DetailRsp(
+        data: Product.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,13 +97,13 @@ class Product {
       };
 }
 
-class Detail {
+class Product {
   @override
   String toString() {
-    return 'Detail: {id: $id, category: $category, title: $title}';
+    return 'Product: {id: $id, category: $category, title: $title}';
   }
 
-  Detail({
+  Product({
     required this.id,
     required this.category,
     required this.title,
@@ -91,7 +137,7 @@ class Detail {
   String mainImage;
   List<String> images;
 
-  factory Detail.fromJson(Map<String, dynamic> json) => Detail(
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         category: json["category"],
         title: json["title"],

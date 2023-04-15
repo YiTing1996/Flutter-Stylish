@@ -19,8 +19,9 @@ abstract class BasePageScreenState<Page extends BasePageScreen>
 }
 
 mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
-  Map<String, List<Detail>>? categoryMap;
-  Detail? productDetail;
+  Map<String, List<Product>>? categoryMap;
+  List<Product>? hotsList;
+  Product? productDetail;
 
   Widget body();
   double screenWidth = 0;
@@ -29,16 +30,17 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
   @override
   Widget build(BuildContext context) {
 
-    void handleCallbackData(List<Detail> products) {
+    void handleCallbackData(List<Product> products, List<Product> hots) {
       if (_isHome) {
-        Map<String, List<Detail>> categoryMap = {};
-        for (Detail detail in products) {
+        Map<String, List<Product>> categoryMap = {};
+        for (Product detail in products) {
           if (!categoryMap.containsKey(detail.category)) {
             categoryMap[detail.category] = [];
           }
           categoryMap[detail.category]!.add(detail);
         }
         this.categoryMap = categoryMap;
+        this.hotsList = hots;
       } else {
         productDetail = products.first;
       }
@@ -73,7 +75,7 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
               } else if (state is ProductErrorState) {
                 return const Center(child: Text('Error'));
               } else if (state is ProductLoadedState) {
-                handleCallbackData(state.products);
+                handleCallbackData(state.products, state.hots);
                 return body();
               }
               return Container(); // 都沒有接收到的狀態
@@ -86,7 +88,7 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
     return GridView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: 10,
+        itemCount: hotsList?.length ?? 0,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200,
             childAspectRatio: 2 / 3,
@@ -95,21 +97,21 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/detail', arguments: index);
+              Navigator.pushNamed(context, '/detail', arguments: hotsList?[index].id ?? 0);
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                'images/default.jpg',
+              child: Image.network(
+                hotsList?[index].mainImage ?? "",
                 fit: BoxFit.fill,
-              ),
+              )
             ),
           );
         });
   }
 
   ListView createColumnContainer(CategoryType category) {
-    List<Detail> getCategoryList(CategoryType type) {
+    List<Product> getCategoryList(CategoryType type) {
       switch (type) {
         case CategoryType.men:
           return categoryMap?[CategoryType.men.rawValue()] ?? [];

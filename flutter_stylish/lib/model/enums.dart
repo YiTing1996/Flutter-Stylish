@@ -12,14 +12,16 @@ extension CategoryTypeExtension on CategoryType {
   }
 }
 
-enum EndPoint { all, details }
+enum EndPoint { all, details, hots }
 extension EndPointExtension on EndPoint {
   String rawValue({int id = 0}) {
     switch (this) {
+      case EndPoint.hots:
+        return "marketing/hots";
       case EndPoint.all:
-        return "all";
+        return "products/all";
       case EndPoint.details:
-        return "details?id=$id";
+        return "products/details?id=$id";
     }
   }
 }
