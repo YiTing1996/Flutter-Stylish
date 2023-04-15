@@ -8,8 +8,14 @@ class HomeDesktopPage extends BasePageScreen {
   State<HomeDesktopPage> createState() => _HomeDesktopPageState();
 }
 
-class _HomeDesktopPageState extends BasePageScreenState<HomeDesktopPage>
-    with BaseScreen {
+class _HomeDesktopPageState extends BasePageScreenState<HomeDesktopPage> with BaseScreen {
+  
+  @override
+  void initState() {
+    isHomePage(true);
+    super.initState();
+  }
+  
   @override
   Widget body() {
     return Column(children: [

@@ -1,81 +1,74 @@
+import 'package:flutter_stylish/page/base_page.dart';
 import '../helper/common_export.dart';
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatefulWidget {
+class DetailPage extends BasePageScreen {
   const DetailPage({super.key});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPageState extends BasePageScreenState<DetailPage> with BaseScreen {
   @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double containerWidth = screenWidth > 650 ? 620 : 300;
-    final int productId = ModalRoute.of(context)!.settings.arguments as int;
+  void initState() {
+    isHomePage(false);
+    super.initState();
+  }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'images/logo.png',
-          width: 120,
-          height: 120,
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: SizedBox(
-            width: containerWidth,
-            child: Column(
-              children: [
-                if (screenWidth > 650) ...[
-                  // desktop
-                  Row(
-                    children: [
-                      Image.asset(
-                        'images/cloth.png',
-                        width: 300,
-                        height: 400,
-                        fit: BoxFit.fill,
-                      ),
-                      const SizedBox(width: 10),
-                      FeatureMenu(
-                          title: 'UNIQLO 特級極輕羽絨外套',
-                          onPressed: () {
-                            debugPrint('ParentView接收到點擊事件');
-                          }),
-                    ],
-                  )
-                ] else ...[
-                  // mobile
-                  Image.asset(
-                    'images/cloth.png',
-                    width: 300,
-                    height: 400,
-                    fit: BoxFit.fill,
-                  ),
-                  FeatureMenu(
-                      title: 'UNIQLO 特級極輕羽絨外套',
-                      onPressed: () {
-                        debugPrint('ParentView接收到點擊事件');
-                      }),
-                ],
-                const SizedBox(height: 10),
-                DescMenu(
-                  containerWidth: containerWidth,
-                  desc:
-                      "O.N.S is all about options, which is why we took our staple polo shirt and upgraded it with slubby linen jersey, making it even lighter for those who prefer their summer style extra-breezy.",
-                  images: const [
-                    'https://picsum.photos/id/238/200/300',
-                    'https://picsum.photos/id/239/200/300',
-                    'https://picsum.photos/id/240/200/300',
-                    'https://picsum.photos/id/241/200/300',
+  @override
+  int getId() {
+    final int productId = ModalRoute.of(context)!.settings.arguments as int;
+    return productId;
+  }
+
+  @override
+  Widget body() {
+    double containerWidth = screenWidth > 650 ? 620 : 300;
+    return SingleChildScrollView(
+      child: Center(
+        child: SizedBox(
+          width: containerWidth,
+          child: Column(
+            children: [
+              if (screenWidth > 650) ...[
+                // desktop
+                Row(
+                  children: [
+                    Image.network(
+                      productDetail?.mainImage ?? "",
+                      width: 300,
+                      height: 400,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(width: 10),
+                    FeatureMenu(
+                        detail: productDetail,
+                        onPressed: () {
+                          debugPrint('ParentView接收到點擊事件');
+                        }),
                   ],
                 )
+              ] else ...[
+                // mobile
+                Image.network(
+                  productDetail?.mainImage ?? "",
+                  width: 300,
+                  height: 400,
+                  fit: BoxFit.fill,
+                ),
+                FeatureMenu(
+                    detail: productDetail,
+                    onPressed: () {
+                      debugPrint('ParentView接收到點擊事件');
+                    }),
               ],
-            ),
+              const SizedBox(height: 10),
+              DescMenu(
+                  containerWidth: containerWidth,
+                  desc: productDetail?.story ?? "",
+                  images: productDetail?.images ?? [])
+            ],
           ),
         ),
       ),
@@ -141,12 +134,12 @@ class DescMenu extends StatelessWidget {
 }
 
 class FeatureMenu extends StatelessWidget {
-  final String title;
+  final Detail? detail;
   final VoidCallback onPressed;
 
   const FeatureMenu({
     Key? key,
-    required this.title,
+    required this.detail,
     required this.onPressed,
   }) : super(key: key);
 
@@ -160,19 +153,19 @@ class FeatureMenu extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                title,
-                style: titleTextStyle,
+              detail?.title ?? "",
+              style: titleTextStyle,
             ),
-            const Text(
-                '2023032101',
-                style: subtitleTextStyle,
+            Text(
+              detail?.id.toString() ?? "",
+              style: subtitleTextStyle,
             ),
-            const Text(
-                'NT \$323',
-                style: titleTextStyle,
+            Text(
+              'NT\$ ${detail?.price ?? ""}',
+              style: titleTextStyle,
             ),
-            getColorButton([Colors.blue, Colors.green]),
-            getSizeButton(['S', 'M']),
+            getColorButton(detail?.colorCodeList() ?? []),
+            getSizeButton(detail?.sizes ?? []),
             Row(
               children: [
                 const Text(
@@ -199,7 +192,7 @@ class FeatureMenu extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const Text('實品顏色依單品照為主\n棉100%\n厚薄:薄\n彈性:無\n素材產地/日本\n加工產地/中國')
+            Text('${detail?.note ?? ""}\n${detail?.texture ?? ""}\n${detail?.description ?? ""}\n產地：${detail?.place ?? ""}')
           ],
         ),
       ),
@@ -228,7 +221,7 @@ class FeatureMenu extends StatelessWidget {
     );
   }
 
-  Row getColorButton(List<Color> colors) {
+  Row getColorButton(List<String> colors) {
     return Row(
       children: [
         const Text(
@@ -240,7 +233,7 @@ class FeatureMenu extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: SqaureColorButton(
-                color: color,
+                color: color.toColor(), // transform hex to color
                 onPressed: () {
                   debugPrint('點擊藍色按鈕');
                 }),

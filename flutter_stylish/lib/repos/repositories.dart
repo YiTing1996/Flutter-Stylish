@@ -1,6 +1,5 @@
 import 'package:http/http.dart';
 import 'package:flutter_stylish/helper/common_export.dart';
-import 'package:flutter_stylish/model/product.dart';
 
 class ProductRepository {
   String baseUrl = 'https://api.appworks-school.tw/api/1.0/products/';

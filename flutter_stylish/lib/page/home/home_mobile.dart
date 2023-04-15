@@ -10,6 +10,13 @@ class HomeMobilePage extends BasePageScreen {
 
 class _HomeMobilePageState extends BasePageScreenState<HomeMobilePage>
     with BaseScreen {
+  
+  @override
+  void initState() {
+    isHomePage(true);
+    super.initState();
+  }
+
   @override
   Widget body() {
     return Column(children: <Widget>[

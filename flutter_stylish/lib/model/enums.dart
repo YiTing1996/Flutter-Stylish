@@ -14,7 +14,7 @@ extension CategoryTypeExtension on CategoryType {
 
 enum EndPoint { all, details }
 extension EndPointExtension on EndPoint {
-  String rawValue({String id = ""}) {
+  String rawValue({int id = 0}) {
     switch (this) {
       case EndPoint.all:
         return "all";

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stylish/helper/common_export.dart';
-import 'package:flutter_stylish/model/product.dart';
 
 abstract class BasePageScreen extends StatefulWidget {
   const BasePageScreen({super.key});
 }
 
 abstract class BasePageScreenState<Page extends BasePageScreen>
-    extends State<Page> {}
+    extends State<Page> {
+  int getId() { return 0; } 
+
+  bool _isHome = true;
+  void isHomePage(bool isHome) {
+    _isHome = isHome;
+  }
+}
 
 mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
-  List<Detail>? womenList;
-  List<Detail>? menList;
-  List<Detail>? accessoryList;
+  Map<String, List<Detail>>? categoryMap;
+  Detail? productDetail;
 
   Widget body();
   double screenWidth = 0;
@@ -21,13 +26,33 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
 
   @override
   Widget build(BuildContext context) {
+
+    void handleCallbackData(List<Detail> products) {
+      if (_isHome) {
+        Map<String, List<Detail>> categoryMap = {};
+        for (Detail detail in products) {
+          if (!categoryMap.containsKey(detail.category)) {
+            categoryMap[detail.category] = [];
+          }
+          categoryMap[detail.category]!.add(detail);
+        }
+        this.categoryMap = categoryMap;
+      } else {
+        productDetail = products.first;
+      }
+    }
+
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+
     return BlocProvider(
-        create: (context) => ProductBloc(
-              RepositoryProvider.of<ProductRepository>(context),
-              EndPoint.all,
-            )..add(LoadProductEvent()),
+        create: (context) => _isHome
+            ? ProductBloc(
+                RepositoryProvider.of<ProductRepository>(context), EndPoint.all)
+            : ProductBloc(RepositoryProvider.of<ProductRepository>(context),
+                EndPoint.details,
+                id: getId())
+          ..add(LoadProductEvent()),
         child: Scaffold(
           appBar: AppBar(
             title: Image.asset(
@@ -46,23 +71,13 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
               } else if (state is ProductErrorState) {
                 return const Center(child: Text('Error'));
               } else if (state is ProductLoadedState) {
-                // 拆成三個List
-                Map<String, List<Detail>> categoryMap = {};
-                for (Detail detail in state.products) {
-                  if (!categoryMap.containsKey(detail.category)) {
-                    categoryMap[detail.category] = [];
-                  }
-                  categoryMap[detail.category]!.add(detail);
-                }
-                womenList = categoryMap[CategoryType.women.rawValue()];
-                menList = categoryMap[CategoryType.men.rawValue()];
-                accessoryList = categoryMap[CategoryType.accessories.rawValue()];
+                handleCallbackData(state.products);
                 return body();
               }
               return Container(); // 都沒有接收到的狀態
             },
           ),
-        ));
+        ));        
   }
 
   GridView createRowContainer() {
@@ -78,7 +93,6 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              // TODO: 帶入ID
               Navigator.pushNamed(context, '/detail', arguments: index);
             },
             child: ClipRRect(
@@ -96,11 +110,11 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
     List<Detail> getCategoryList(CategoryType type) {
       switch (type) {
         case CategoryType.men:
-          return menList ?? [];
+          return categoryMap?[CategoryType.men.rawValue()] ?? [];
         case CategoryType.women:
-          return womenList ?? [];
+          return categoryMap?[CategoryType.women.rawValue()] ?? [];
         case CategoryType.accessories:
-          return accessoryList ?? [];
+          return categoryMap?[CategoryType.accessories.rawValue()] ?? [];
       }
     }
 
@@ -142,9 +156,8 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
                             child: Text(categoryList[index].title),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                            child: Text('\$${categoryList[index].price}')
-                          )
+                              padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                              child: Text('\$${categoryList[index].price}'))
                         ],
                       ),
                     ))

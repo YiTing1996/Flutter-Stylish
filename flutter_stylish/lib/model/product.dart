@@ -92,11 +92,11 @@ class Detail {
   List<String> images;
 
   factory Detail.fromJson(Map<String, dynamic> json) => Detail(
-        id: json["id"] ?? 0,
+        id: json["id"],
         category: json["category"],
         title: json["title"],
         description: json["description"],
-        price: json["price"] ?? 0,
+        price: json["price"],
         texture: json["texture"],
         wash: json["wash"],
         place: json["place"],
@@ -127,6 +127,14 @@ class Detail {
         "main_image": mainImage,
         "images": List<dynamic>.from(images.map((x) => x)),
       };
+  
+  List<String> colorCodeList() { // for detail desc menu
+    List<String> codeList = [];
+    for (var color in colors) {
+      codeList.add(color.code);
+    }
+    return codeList;
+  }
 }
 
 class Color {
