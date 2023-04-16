@@ -13,7 +13,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double containerWidth = screenWidth > 650 ? 620 : 300;
-    final String message = ModalRoute.of(context)!.settings.arguments as String;
+    final int productId = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       appBar: AppBar(
