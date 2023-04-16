@@ -32,11 +32,6 @@
   <title>flutter_stylish</title>
   <link rel="manifest" href="manifest.json">
 
-  <script type="text/javascript">
-    // 讓圖片可以正常在web顯示
-    window.flutterWebRenderer = "html";
-  </script>
-
   <script>
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
@@ -46,14 +41,16 @@
 </head>
 <body>
   <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
+      window.addEventListener('load', function(ev) {
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+          engineInitializer.initializeEngine({
+            // Source: https://hackmd.io/fluY03AITsWY4j3igw2mZQ?view
+            renderer:'html' // 這邊指定 renderer
+          }).then(function(appRunner) {
             appRunner.runApp();
           });
         }
