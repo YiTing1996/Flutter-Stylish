@@ -1,4 +1,5 @@
 import 'package:flutter_stylish/helper/export/common_export.dart';
+import 'package:flutter_stylish/tappay_handler.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -33,7 +34,9 @@ class _CartPageState extends State<CartPage> {
                   ItemWidget(
                     items: state.cart.cartItems,
                     onDelete: (index) {
-                      context.read<CartBloc>().add(CartRemoveEvent(state.cart.cartItems[index]));
+                      context
+                          .read<CartBloc>()
+                          .add(CartRemoveEvent(state.cart.cartItems[index]));
                     },
                   ),
                   const AccountWidget(),
@@ -42,6 +45,18 @@ class _CartPageState extends State<CartPage> {
                   ElevatedButton(
                     onPressed: () {
                       debugPrint('點擊結帳');
+                      Tappay.getPrime(
+                        cardNumber: "4111111111111111",
+                        dueMonth: "01",
+                        dueYear: "24",
+                        ccv: "123",
+                        onSuccess: (prime) {
+                          showOkDialog(context, 'Payment Success', prime);
+                        },
+                        onFail: (msg) {
+                          showOkDialog(context, 'Payment Fail', msg);
+                        },
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size(300, 50),
@@ -98,7 +113,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                     Image.network(
                       widget.items[index].mainImage,
                       width: screenWidth < 650 ? 60 : 80,
-                      height: screenWidth < 650 ? 80: 100,
+                      height: screenWidth < 650 ? 80 : 100,
                       fit: BoxFit.fill,
                     ),
                     horizontalSpace,
@@ -118,7 +133,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                           children: [
                             NumChangeWidget(
                                 num: widget.items[index].count,
-                                width: screenWidth * 1/10,
+                                width: screenWidth * 1 / 10,
                                 onValueChanged: (selected) {
                                   debugPrint('Change to $selected');
                                 }),
@@ -180,10 +195,10 @@ class _AccountWidgetState extends State<AccountWidget> {
     }
 
     Row createRadioRow(DeliverTime current) {
-      return Row(
-        children: [
+      return Row(children: [
         Radio<DeliverTime>(
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // 縮減Radio的Padding
+          materialTapTargetSize:
+              MaterialTapTargetSize.shrinkWrap, // 縮減Radio的Padding
           value: current,
           groupValue: _deliverTime,
           onChanged: (DeliverTime? value) {
