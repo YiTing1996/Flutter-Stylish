@@ -25,7 +25,7 @@ class _HomeMobilePageState extends BasePageScreenState<HomeMobilePage>
           child: SizedBox(height: 100, child: createRowContainer())),
       SizedBox(
         width: screenWidth * 0.97,
-        height: screenHeight - 200,
+        height: screenHeight - 220,
         child: ListView(
           children: [
             Column(

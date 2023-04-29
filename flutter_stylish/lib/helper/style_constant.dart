@@ -35,3 +35,13 @@ const secSubtitleTextStyle = TextStyle(
   letterSpacing: 0.5,
   fontSize: 14,
 );
+
+var defaultAppBar = AppBar(
+    title: Image.asset(
+      'assets/logo.png',
+      width: 120,
+      height: 120,
+    ),
+    iconTheme: const IconThemeData(color: Colors.black12),
+    backgroundColor: Colors.white,
+);

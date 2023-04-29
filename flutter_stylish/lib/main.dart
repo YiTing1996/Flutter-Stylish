@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stylish/page/map.dart';
 import 'package:flutter_stylish/repos/repositories.dart';
 import 'package:flutter_stylish/page/detail.dart';
 import 'package:flutter_stylish/page/home/home_desktop.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
               }
             }),
         '/detail': (context) => const DetailPage(),
+        '/map':(context) => MapPage()
       },
       ),
     );

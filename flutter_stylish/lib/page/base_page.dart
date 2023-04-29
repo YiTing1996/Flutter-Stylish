@@ -60,10 +60,27 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
         child: Scaffold(
           appBar: AppBar(
             title: Image.asset(
-              'images/logo.png',
+              'assets/logo.png',
               width: 120,
               height: 120,
             ),
+            iconTheme: const IconThemeData(
+              color: Colors.black12
+            ),
+            actions: [
+              Padding(padding: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/map');
+                },
+                child: const Icon(
+                  Icons.map,
+                  color: Colors.black12,
+                  size: 25,
+                ),
+              ),
+              )
+            ],
             backgroundColor: Colors.white,
           ),
           body: BlocBuilder<ProductBloc, ProductState>(
