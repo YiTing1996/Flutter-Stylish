@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stylish/page/base_page.dart';
-import 'package:flutter_stylish/helper/common_export.dart';
+import 'package:flutter_stylish/model/enums.dart';
+import 'package:flutter_stylish/page/home/home_base_page.dart';
 
 class HomeMobilePage extends BasePageScreen {
   const HomeMobilePage({Key? key}) : super(key: key);
@@ -10,12 +10,6 @@ class HomeMobilePage extends BasePageScreen {
 
 class _HomeMobilePageState extends BasePageScreenState<HomeMobilePage>
     with BaseScreen {
-  
-  @override
-  void initState() {
-    isHomePage(true);
-    super.initState();
-  }
 
   @override
   Widget body() {

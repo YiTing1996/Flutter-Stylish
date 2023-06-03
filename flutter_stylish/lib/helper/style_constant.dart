@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const titleTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
   letterSpacing: 0.5,
-  fontSize: 18,
+  fontSize: 16,
   height: 2,
 );
 
@@ -33,7 +33,7 @@ const secSubtitleTextStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
   letterSpacing: 0.5,
-  fontSize: 14,
+  fontSize: 12,
 );
 
 var defaultAppBar = AppBar(

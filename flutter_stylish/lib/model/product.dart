@@ -131,7 +131,7 @@ class Product {
   String place;
   String note;
   String story;
-  List<Color> colors;
+  List<PColor> colors;
   List<String> sizes;
   List<Variant> variants;
   String mainImage;
@@ -148,7 +148,7 @@ class Product {
         place: json["place"],
         note: json["note"],
         story: json["story"],
-        colors: List<Color>.from(json["colors"].map((x) => Color.fromJson(x))),
+        colors: List<PColor>.from(json["colors"].map((x) => PColor.fromJson(x))),
         sizes: List<String>.from(json["sizes"].map((x) => x)),
         variants: List<Variant>.from(
             json["variants"].map((x) => Variant.fromJson(x))),
@@ -173,19 +173,10 @@ class Product {
         "main_image": mainImage,
         "images": List<dynamic>.from(images.map((x) => x)),
       };
-  
-  /// Get color code list (for detail desc menu)
-  List<String> colorCodeList() {
-    List<String> codeList = [];
-    for (var color in colors) {
-      codeList.add(color.code);
-    }
-    return codeList;
-  }
 }
 
-class Color {
-  Color({
+class PColor {
+  PColor({
     required this.code,
     required this.name,
   });
@@ -193,7 +184,7 @@ class Color {
   String code;
   String name;
 
-  factory Color.fromJson(Map<String, dynamic> json) => Color(
+  factory PColor.fromJson(Map<String, dynamic> json) => PColor(
         code: json["code"],
         name: json["name"],
       );

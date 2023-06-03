@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stylish/model/product.dart';
 
 @immutable
-abstract class ProductState extends Equatable {} // Equatable比較兩個State是否相同
+abstract class ProductState extends Equatable {}
 
 class ProductLoadingState extends ProductState {
   @override
@@ -16,7 +16,7 @@ class ProductLoadedState extends ProductState {
   final List<Product> hots;
 
   @override
-  List<Object> get props => [products];
+  List<Object> get props => [products, hots];
 }
 
 class ProductErrorState extends ProductState {

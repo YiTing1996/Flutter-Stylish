@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stylish/page/map.dart';
-import 'package:flutter_stylish/repos/repositories.dart';
+import 'package:flutter_stylish/page/cart.dart';
 import 'package:flutter_stylish/page/detail.dart';
 import 'package:flutter_stylish/page/home/home_desktop.dart';
 import 'package:flutter_stylish/page/home/home_mobile.dart';
+import 'package:flutter_stylish/helper/export/bloc_export.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => ProductRepository(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => CartBloc()..add(CartInitialEvent())),
+        BlocProvider(create: (_) => ProductBloc()..add(ProductInitialEvent())),
+      ],
       child: MaterialApp(
         initialRoute: '/', 
         routes: {
@@ -28,7 +30,8 @@ class MyApp extends StatelessWidget {
               }
             }),
         '/detail': (context) => const DetailPage(),
-        '/map':(context) => MapPage()
+        '/map':(context) => const MapPage(),
+        '/cart': (context) => const CartPage(),
       },
       ),
     );

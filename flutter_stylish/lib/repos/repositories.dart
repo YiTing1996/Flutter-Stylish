@@ -1,10 +1,20 @@
 import 'package:http/http.dart';
-import 'package:flutter_stylish/helper/common_export.dart';
+import 'package:flutter_stylish/helper/export/bloc_export.dart';
 
-class ProductRepository {
+class Repository {
   String baseUrl = 'https://api.appworks-school.tw/api/1.0/';
 
-  Future<List<Product>> getProducts(EndPoint endpoint, {id}) async {
+  Future<Product> getDetail(int id) async {
+      Response response = await get(Uri.parse(baseUrl + EndPoint.details.rawValue(id: id)));
+      if (response.statusCode == 200) {
+        final result = parseSingleFromJson(response.body).data;
+        return result;
+      } else {
+        throw Exception(response.reasonPhrase);
+      }
+  }
+
+  Future<List<Product>> getProducts(EndPoint endpoint) async {
     if (endpoint == EndPoint.all) {
       Response response = await get(Uri.parse(baseUrl + endpoint.rawValue()));
       if (response.statusCode == 200) {
@@ -23,16 +33,7 @@ class ProductRepository {
       } else {
         throw Exception(response.reasonPhrase);
       }
-    } else {
-      Response response = await get(Uri.parse(baseUrl + endpoint.rawValue(id: id)));
-      if (response.statusCode == 200) {
-        final result = parseSingleFromJson(response.body).data;
-        List<Product> array = [];
-        array.add(result);
-        return array;
-      } else {
-        throw Exception(response.reasonPhrase);
-      }
     }
+    return [];
   }
 }

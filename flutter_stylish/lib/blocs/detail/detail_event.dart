@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-abstract class ProductEvent extends Equatable {
-  const ProductEvent();
+abstract class DetailEvent extends Equatable {
+  const DetailEvent();
 }
 
-class LoadProductEvent extends ProductEvent {
+class DetailInitialEvent extends DetailEvent {
   @override
   List<Object> get props => [];
 }
