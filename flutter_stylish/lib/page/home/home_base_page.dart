@@ -116,6 +116,7 @@ mixin BaseScreen<Page extends BasePageScreen> on BasePageScreenState<Page> {
     var categoryList = getCategoryList(category);
 
     return ListView.builder(
+      primary: false, // 讓lisView不能滾動
       shrinkWrap: true,
       itemCount: categoryList.length,
       itemBuilder: (context, index) {

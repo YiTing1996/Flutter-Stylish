@@ -92,8 +92,8 @@ class _DetailPageState extends State<DetailPage> {
                 // mobile
                 Image.network(
                   productDetail?.mainImage ?? "",
-                  width: 350,
-                  height: 400,
+                  width: 320,
+                  height: 380,
                   fit: BoxFit.fill,
                 ),
                 const FeatureMenu()
@@ -246,8 +246,9 @@ class _FeatureMenuState extends State<FeatureMenu> {
                         color: selectedColor,
                         size: selectedSize,
                         mainImage: detail?.mainImage ?? "",
-                        stock: selectedCount)));
-                    showOkDialog(context, 'Success Add To Cart', 'Check items in shopping cart 🛒');
+                        count: selectedCount)));
+                    showOkDialog(context, 'Success Add To Cart',
+                        'Check items in shopping cart 🛒');
                   },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(300, 50),
@@ -278,12 +279,15 @@ class _FeatureMenuState extends State<FeatureMenu> {
           '數量',
           style: subtitleTextStyle,
         ),
-        NumChangeWidget(onValueChanged: (selected) {
-          debugPrint('數量改變$selected');
-          setState(() {
-            selectedCount = selected;
-          });
-        })
+        NumChangeWidget(
+            num: 0,
+            width: 150,
+            onValueChanged: (selected) {
+              debugPrint('數量改變$selected');
+              setState(() {
+                selectedCount = selected;
+              });
+            })
       ],
     );
   }

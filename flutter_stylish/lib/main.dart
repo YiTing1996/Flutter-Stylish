@@ -22,17 +22,20 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/', 
         routes: {
-        '/': (context) => LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return const HomeMobilePage();
-              } else {
-                return const HomeDesktopPage();
-              }
-            }),
-        '/detail': (context) => const DetailPage(),
-        '/map':(context) => const MapPage(),
-        '/cart': (context) => const CartPage(),
-      },
+          '/': (context) => LayoutBuilder(builder: (context, constraints) {
+                if (constraints.maxWidth < 600) {
+                  return const HomeMobilePage();
+                } else {
+                  return const HomeDesktopPage();
+                }
+              }),
+          '/detail': (context) => const DetailPage(),
+          '/map': (context) => const MapPage(),
+          '/cart': (context) => const CartPage(),
+        },
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+        ),
       ),
     );
   }

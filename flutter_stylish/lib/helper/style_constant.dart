@@ -5,13 +5,23 @@ const titleTextStyle = TextStyle(
   letterSpacing: 0.5,
   fontSize: 16,
   height: 2,
+  color: Colors.black87
 );
 
 const subtitleTextStyle = TextStyle(
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w600,
   letterSpacing: 0.5,
   fontSize: 14,
   height: 2,
+  color: Colors.black87
+);
+
+const contentTextStyle = TextStyle(
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.5,
+  fontSize: 12,
+  height: 2,
+  color: Colors.black87
 );
 
 const descTextStyle = TextStyle(
@@ -25,7 +35,7 @@ const secTitleTextStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.w600,
   letterSpacing: 0.5,
-  fontSize: 18,
+  fontSize: 16,
   height: 2,
 );
 
@@ -45,3 +55,7 @@ var defaultAppBar = AppBar(
     iconTheme: const IconThemeData(color: Colors.black12),
     backgroundColor: Colors.white,
 );
+
+const extraVerticalSpace = SizedBox(height: 50);
+const verticalSpace = SizedBox(height: 10);
+const horizontalSpace = SizedBox(width: 10);

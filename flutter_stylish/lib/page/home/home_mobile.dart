@@ -10,26 +10,32 @@ class HomeMobilePage extends BasePageScreen {
 
 class _HomeMobilePageState extends BasePageScreenState<HomeMobilePage>
     with BaseScreen {
-
   @override
   Widget body() {
     return Column(children: <Widget>[
       Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(height: 100, child: createRowContainer())),
-      SizedBox(
-        width: screenWidth * 0.97,
-        height: screenHeight - 220,
+      Expanded(
         child: ListView(
           children: [
             Column(
-              children: [const Text("女裝"), createColumnContainer(CategoryType.women)],
+              children: [
+                const Text("女裝"),
+                createColumnContainer(CategoryType.women)
+              ],
             ),
             Column(
-              children: [const Text("男裝"), createColumnContainer(CategoryType.men)],
+              children: [
+                const Text("男裝"),
+                createColumnContainer(CategoryType.men)
+              ],
             ),
             Column(
-              children: [const Text("配件"), createColumnContainer(CategoryType.accessories)],
+              children: [
+                const Text("配件"),
+                createColumnContainer(CategoryType.accessories)
+              ],
             ),
           ],
         ),

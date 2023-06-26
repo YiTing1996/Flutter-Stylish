@@ -6,15 +6,15 @@ class NumChangeWidget extends StatefulWidget {
   final double height;
   final double width;
   final double iconWidth;
-  final String numText;
+  final int num;
   final ValueChanged onValueChanged;
 
   const NumChangeWidget({
     Key? key,
    this.height = 50,
-   this.width = 150,
    this.iconWidth = 50,
-   this.numText = '0',
+   required this.num,
+   required this.width,
    required this.onValueChanged,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class _NumChangeWidgetState extends State<NumChangeWidget> {
   @override
   void initState() {
     super.initState();
-    textController.text = widget.numText;
+    textController.text = '${widget.num}';
   }
 
   @override

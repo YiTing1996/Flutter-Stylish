@@ -34,7 +34,7 @@ class CartItem {
   CColor color;
   String size;
   String mainImage;
-  int stock;
+  int count;
 
   CartItem({
     required this.id,
@@ -43,7 +43,7 @@ class CartItem {
     required this.color,
     required this.size,
     required this.mainImage,
-    required this.stock,
+    required this.count,
   });
 }
 

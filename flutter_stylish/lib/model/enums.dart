@@ -1,4 +1,5 @@
 enum CategoryType { women, men, accessories }
+
 extension CategoryTypeExtension on CategoryType {
   String rawValue() {
     switch (this) {
@@ -22,6 +23,20 @@ extension EndPointExtension on EndPoint {
         return "products/all";
       case EndPoint.details:
         return "products/details?id=$id";
+    }
+  }
+}
+
+enum DeliverTime { morning, afternoon, all }
+extension DeliverTimeExtension on DeliverTime {
+  String rawValue() {
+    switch (this) {
+      case DeliverTime.morning:
+        return '8-11AM';
+      case DeliverTime.afternoon:
+        return '12-18PM';
+      case DeliverTime.all:
+        return '不指定';
     }
   }
 }
