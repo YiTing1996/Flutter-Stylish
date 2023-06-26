@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => CartBloc()..add(CartInitialEvent())),
         BlocProvider(create: (_) => ProductBloc()..add(ProductInitialEvent())),
+        BlocProvider(create: (_) => CheckoutBloc()..add(CheckoutInitialEvent())),
       ],
       child: MaterialApp(
         initialRoute: '/', 

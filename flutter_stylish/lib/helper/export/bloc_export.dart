@@ -16,6 +16,11 @@ export 'package:flutter_stylish/blocs/detail/detail_bloc.dart';
 export 'package:flutter_stylish/blocs/detail/detail_event.dart';
 export 'package:flutter_stylish/blocs/detail/detail_state.dart';
 
+export 'package:flutter_stylish/blocs/checkout/checkout_bloc.dart';
+export 'package:flutter_stylish/blocs/checkout/checkout_event.dart';
+export 'package:flutter_stylish/blocs/checkout/checkout_state.dart';
+
 export 'package:flutter_stylish/model/enums.dart';
 export 'package:flutter_stylish/model/product.dart';
 export 'package:flutter_stylish/model/cart.dart';
+export 'package:flutter_stylish/model/checkout.dart';

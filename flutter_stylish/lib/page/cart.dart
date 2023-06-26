@@ -42,30 +42,37 @@ class _CartPageState extends State<CartPage> {
                   const AccountWidget(),
                   const PaymentWidget(),
                   extraVerticalSpace,
-                  ElevatedButton(
-                    onPressed: () {
-                      debugPrint('點擊結帳');
-                      Tappay.getPrime(
-                        cardNumber: "4111111111111111",
-                        dueMonth: "01",
-                        dueYear: "24",
-                        ccv: "123",
-                        onSuccess: (prime) {
-                          showOkDialog(context, 'Payment Success', prime);
+                  BlocBuilder<CheckoutBloc, CheckoutState>(
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          debugPrint('點擊結帳');
+                          if (state is CheckoutLoadedState) {
+                            debugPrint('取得結帳資訊 ${state.checkout}');
+                            Tappay.getPrime(
+                              cardNumber: state.cardNumber!,
+                              dueMonth: state.dueMonth!,
+                              dueYear: state.dueYear!,
+                              ccv: state.ccv!,
+                              onSuccess: (prime) {
+                                showOkDialog(context, 'Payment Success', prime);
+                              },
+                              onFail: (msg) {
+                                showOkDialog(context, 'Payment Fail', msg);
+                              },
+                            );
+                          }
                         },
-                        onFail: (msg) {
-                          showOkDialog(context, 'Payment Fail', msg);
-                        },
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(300, 50),
+                            backgroundColor: Colors.black45,
+                            textStyle: secTitleTextStyle),
+                        child: const Text(
+                          '確認結帳',
+                          style: secTitleTextStyle,
+                        ),
                       );
                     },
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(300, 50),
-                        backgroundColor: Colors.black45,
-                        textStyle: secTitleTextStyle),
-                    child: const Text(
-                      '確認結帳',
-                      style: secTitleTextStyle,
-                    ),
                   )
                 ],
               )),
@@ -173,7 +180,7 @@ class _AccountWidgetState extends State<AccountWidget> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
 
-    Row createInputRow(String title) {
+    Row createInputRow(String title, Function(String text) onChanged) {
       return Row(children: [
         SizedBox(
           width: 80,
@@ -184,6 +191,9 @@ class _AccountWidgetState extends State<AccountWidget> {
           // TextField包在Row裡面需要給固定的大小
           width: screenWidth - 150,
           child: TextFormField(
+              onChanged: (value) {
+                onChanged(value);
+              },
               keyboardType: TextInputType.number,
               validator: (String? value) {
                 return (value != null && value.isEmpty)
@@ -211,30 +221,51 @@ class _AccountWidgetState extends State<AccountWidget> {
       ]);
     }
 
-    return ExpansionTile(
-      title: const Center(child: Text('訂購資料', style: titleTextStyle)),
-      // initiallyExpanded: true,
-      children: [
-        createInputRow('收件人姓名'),
-        createInputRow('Email'),
-        createInputRow('手機'),
-        createInputRow('地址'),
-        SizedBox(
-          height: 50,
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 80,
-                child: Text('運送時間', style: subtitleTextStyle),
+    return BlocBuilder<CheckoutBloc, CheckoutState>(builder: (context, state) {
+      if (state is CheckoutLoadedState) {
+        return ExpansionTile(
+          title: const Center(child: Text('訂購資料', style: titleTextStyle)),
+          // initiallyExpanded: true,
+          children: [
+            createInputRow('收件人姓名', (text) {
+              context
+                  .read<CheckoutBloc>()
+                  .add(UpdateCheckoutEvent(fullName: text));
+            }),
+            createInputRow('Email', (text) {
+              context
+                  .read<CheckoutBloc>()
+                  .add(UpdateCheckoutEvent(email: text));
+            }),
+            createInputRow('手機', (text) {
+              context
+                  .read<CheckoutBloc>()
+                  .add(UpdateCheckoutEvent(phone: text));
+            }),
+            createInputRow('地址', (text) {
+              context
+                  .read<CheckoutBloc>()
+                  .add(UpdateCheckoutEvent(address: text));
+            }),
+            SizedBox(
+              height: 50,
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 80,
+                    child: Text('運送時間', style: subtitleTextStyle),
+                  ),
+                  createRadioRow(DeliverTime.morning),
+                  createRadioRow(DeliverTime.afternoon),
+                  createRadioRow(DeliverTime.all),
+                ],
               ),
-              createRadioRow(DeliverTime.morning),
-              createRadioRow(DeliverTime.afternoon),
-              createRadioRow(DeliverTime.all),
-            ],
-          ),
-        ),
-      ],
-    );
+            ),
+          ],
+        );
+      }
+      return const Text('Error');
+    });
   }
 }
 
@@ -252,7 +283,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
 
-    Row createInputRow(String title) {
+    Row createInputRow(String title, Function(String text) onChanged) {
       return Row(children: [
         SizedBox(
           width: 80,
@@ -263,6 +294,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
           // TextField包在Row裡面需要給固定的大小
           width: screenWidth - 150,
           child: TextFormField(
+              onChanged: (value) {
+                onChanged(value);
+              },
               keyboardType: TextInputType.number,
               validator: (String? value) {
                 return (value != null && value.isEmpty)
@@ -273,14 +307,38 @@ class _PaymentWidgetState extends State<PaymentWidget> {
       ]);
     }
 
-    return ExpansionTile(
-      title: const Center(child: Text('付款資料', style: titleTextStyle)),
-      // initiallyExpanded: true,
-      children: [
-        createInputRow('信用卡號碼'),
-        createInputRow('有效期限'),
-        createInputRow('安全碼'),
-      ],
+    return BlocBuilder<CheckoutBloc, CheckoutState>(
+      builder: (context, state) {
+        if (state is CheckoutLoadedState) {
+          return ExpansionTile(
+            title: const Center(child: Text('付款資料', style: titleTextStyle)),
+            // initiallyExpanded: true,
+            children: [
+              createInputRow('信用卡號碼', (text) {
+                context
+                    .read<CheckoutBloc>()
+                    .add(UpdateCheckoutEvent(cardNumber: text));
+              }),
+              createInputRow('到期年份', (text) {
+                context
+                    .read<CheckoutBloc>()
+                    .add(UpdateCheckoutEvent(dueYear: text));
+              }),
+              createInputRow('到期月份', (text) {
+                context
+                    .read<CheckoutBloc>()
+                    .add(UpdateCheckoutEvent(dueMonth: text));
+              }),
+              createInputRow('安全碼', (text) {
+                context
+                    .read<CheckoutBloc>()
+                    .add(UpdateCheckoutEvent(ccv: text));
+              }),
+            ],
+          );
+        }
+        return const Text('Error'); // 都沒有接收到的狀態
+      },
     );
   }
 }
