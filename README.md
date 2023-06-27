@@ -5,28 +5,28 @@
 ## Features
 
 #### iOS
-> - Additionally support Tappay SDK. Please check branch 'feature-tappay'
+> - Additionally support Tappay SDK. Please check branch 'feature/tappay'
 <p>
-<img src="https://i.imgur.com/A5xIkWJ.png" height="400"/>
-<img src="https://imgur.com/a/g056FVm.png" height="400"/>
-<img src="https://imgur.com/a/PmygHb0.png" height="400"/>
-<img src="https://imgur.com/a/znNC4OE.png" height="400"/>
+<img src="https://i.imgur.com/CRDr9IQ.png" height="400"/>
+<img src="https://i.imgur.com/HvT2Z6f.png" height="400"/>
+<img src="https://i.imgur.com/ttEGswm.png" height="400"/>
+<img src="https://i.imgur.com/P2ZO3ZK.png" height="400"/>
 </p>
 
 #### Android
 <p>
-<img src="https://imgur.com/a/WtXSOwq.png" height="400"/>
-<img src="https://imgur.com/a/krIYS6V.png" height="400"/>
-<img src="https://imgur.com/a/YVegsAr.png" height="400"/>
+<img src="https://i.imgur.com/vR11f4y.png" height="400"/>
+<img src="https://i.imgur.com/9jKE9sE.png" height="400"/>
+<img src="https://i.imgur.com/PvKm9Ua.png" height="400"/>
 </p>
 
 #### Web
 > - Responsive UI according to size of webpage
 <p>
-<img src="https://imgur.com/a/jIkfFVI.png" height="400"/>
-<img src="https://imgur.com/a/aBQUYQR.png" height="400"/>
-<img src="https://imgur.com/a/KrCtL5Y.png" height="400"/>
-<img src="https://imgur.com/a/KC7kUIw.png" height="400"/>
+<img src="https://i.imgur.com/y0GO772.png" height="400"/>
+<img src="https://i.imgur.com/7oGIS88.png" height="400"/>
+<img src="https://i.imgur.com/cQm3phj.png" height="400"/>
+<img src="https://i.imgur.com/dC9PL2E.png" height="400"/>
 </p>
 
 
